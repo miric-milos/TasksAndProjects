@@ -35,13 +35,22 @@ namespace TasksAndProjectsApp.Controllers
             {
                 AppUser user = AppUser.Users
                     .FirstOrDefault(u => u.UserName == model.UserName &&
-                    u.Password.GetHashCode() == u.Password.GetHashCode());
+                    u.Password.GetHashCode() == model.Password.GetHashCode());
 
                 if(user != null)
                 {
-                    // authmanager.login(user)
+                    _authManager.LogIn(user.Id, model.RememberMe);
+                    // TODO: check roles
+                    // redirect to dashboard after login
+
+                    return View("Index");
                 }
-            }            
+
+                // user not found
+                ModelState.AddModelError("", "Username or password are incorrect.");
+            }
+
+            return View("Index");
         }
     }
 }

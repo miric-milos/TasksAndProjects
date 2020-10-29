@@ -16,14 +16,28 @@ namespace TasksAndProjectsApp.Infrastructure
             _httpContext = httpContext;
         }
 
-        public void LogIn(AppUser user)
+        public void LogIn(int userId, bool isPersistant)
         {
-            
+            CookieOptions options = new CookieOptions();
+
+            options.Expires = isPersistant ? DateTime.Now.AddHours(1) : DateTime.Now.AddDays(365);
+
+            // set cookie
+            _httpContext.HttpContext.Response.Cookies.Append("userid", userId.ToString(), options);
         }
 
         public void LogOut()
         {
-            throw new NotImplementedException();
+            if (IsCookieSet("userid"))
+                _httpContext.HttpContext.Response.Cookies.Delete("userid");            
         }
+
+        #region private
+        private bool IsCookieSet(string cookieName)
+        {
+            return !string.IsNullOrEmpty(
+                _httpContext.HttpContext.Request.Cookies[cookieName]);
+        }
+        #endregion
     }
 }
