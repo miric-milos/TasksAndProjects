@@ -16,6 +16,15 @@ namespace TasksAndProjectsApp.Infrastructure
             _httpContext = httpContext;
         }
 
+        public AppUser GetAuthenticatedUser()
+        {
+            int userid = int.Parse(GetCookieValue("userid"));
+
+            AppUser user = AppUser.Users.FirstOrDefault(u => u.Id == userid);
+
+            return user;
+        }
+
         public void LogIn(int userId, bool isPersistant)
         {
             CookieOptions options = new CookieOptions();
@@ -42,6 +51,16 @@ namespace TasksAndProjectsApp.Infrastructure
         {
             return !string.IsNullOrEmpty(
                 _httpContext.HttpContext.Request.Cookies[cookieName]);
+        }
+
+        private string GetCookieValue(string cookieName)
+        {
+            if (IsCookieSet(cookieName))
+            {
+                return _httpContext.HttpContext.Request.Cookies[cookieName];
+            }
+
+            throw new Exception("Cookie not set!");
         }
         #endregion
     }
