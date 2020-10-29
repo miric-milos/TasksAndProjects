@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace TasksAndProjectsApp.Models
 {
-    public class User
+    public class AppUser
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         // login info
         public string UserName { get; set; }
@@ -19,5 +19,12 @@ namespace TasksAndProjectsApp.Models
         public string Email { get; set; }
 
         public Role Role { get; set; }
+
+
+        public static List<AppUser> Users { get; set; } = new List<AppUser>
+        {
+            new AppUser{Id=0,UserName="miledizna",Password="test123"},
+            new AppUser{Id=1,UserName="canekurbla",Password="test123"}
+        };
     }
 }
