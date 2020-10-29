@@ -24,6 +24,9 @@ namespace TasksAndProjectsApp.Controllers
 
         public IActionResult Index()
         {
+            if (_authManager.UserIsAuthenticated()) 
+                return Redirect("/dashboard");            
+
             return View();
         }
 

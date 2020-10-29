@@ -20,7 +20,7 @@ namespace TasksAndProjectsApp.Infrastructure
         {
             CookieOptions options = new CookieOptions();
 
-            options.Expires = isPersistant ? DateTime.Now.AddHours(1) : DateTime.Now.AddDays(365);
+            options.Expires = isPersistant ? DateTime.Now.AddDays(365) : DateTime.Now.AddHours(1);
 
             // set cookie
             _httpContext.HttpContext.Response.Cookies.Append("userid", userId.ToString(), options);
@@ -30,6 +30,11 @@ namespace TasksAndProjectsApp.Infrastructure
         {
             if (IsCookieSet("userid"))
                 _httpContext.HttpContext.Response.Cookies.Delete("userid");            
+        }
+
+        public bool UserIsAuthenticated()
+        {
+            return IsCookieSet("userid");
         }
 
         #region private

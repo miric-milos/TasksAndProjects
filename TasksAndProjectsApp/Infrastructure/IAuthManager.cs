@@ -10,5 +10,6 @@ namespace TasksAndProjectsApp.Infrastructure
     {
         void LogIn(int userId, bool isPersistant);
         void LogOut();
+        bool UserIsAuthenticated();
     }
 }
