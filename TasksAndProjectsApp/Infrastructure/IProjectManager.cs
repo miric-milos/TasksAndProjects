@@ -10,5 +10,6 @@ namespace TasksAndProjectsApp.Infrastructure
     {
         void DeleteProject(int projId);
         Project GetProjectById(int projId);
+        void CreateProject(Project proj);
     }
 }

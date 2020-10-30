@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace TasksAndProjectsApp.Models.ViewModels
 {
-    public class EditProjectViewModel
+    public class CreateProjectViewModel
     {
         [Required(ErrorMessage = "Project name is required!")]
         public string Name { get; set; }
-
-        // prop tasks
-        public List<Task> Tasks { get; set; }
     }
 }

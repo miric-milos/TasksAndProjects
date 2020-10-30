@@ -25,12 +25,10 @@ namespace TasksAndProjectsApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
             // custom dependencies
             services.AddHttpContextAccessor();
             services.AddSingleton<IAuthManager, AuthManager>();
             services.AddSingleton<IProjectManager, ProjectManager>();
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,9 +48,9 @@ namespace TasksAndProjectsApp
             app.UseStaticFiles();
             
             app.UseRouting();
-
+            app.UseHttpMethodOverride();
             app.UseAuthorization();
-
+           
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

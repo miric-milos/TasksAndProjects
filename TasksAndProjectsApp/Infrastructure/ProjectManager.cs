@@ -7,7 +7,7 @@ using TasksAndProjectsApp.Models;
 namespace TasksAndProjectsApp.Infrastructure
 {
     public class ProjectManager : IProjectManager
-    {
+    {        
         // dbcontext dependancy
 
         public void DeleteProject(int projId)
@@ -25,6 +25,12 @@ namespace TasksAndProjectsApp.Infrastructure
         {
             return Project.Projects
                 .FirstOrDefault(p => p.Id == projId);
+        }
+
+        public void CreateProject(Project proj)
+        {
+            // save proj to DB
+            Project.Projects.Add(proj);
         }
     }
 }

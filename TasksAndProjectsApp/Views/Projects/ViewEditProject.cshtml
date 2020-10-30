@@ -6,7 +6,7 @@
 
 <div class="container-fluid my-5">
     <div class="row my-5">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card shadow">
                 <div class="card-header bg-primary">
                     <h4 class="text-white my-auto">Edit project details</h4>
@@ -25,6 +25,53 @@
                     </form>
 
                 </div>
+            </div>
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-md-8">
+            <div class="table-responsive shadow">
+                <table class="table table-light table-striped">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Assignee</th>
+                            <th>Progress</th>
+                            <th>Status</th>
+                            <th>Deadline</th>
+                            <th>Manage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Tasks.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="5">No tasks are assigned to this project</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var task in Model.Tasks)
+                            {
+                                <tr>
+                                    <td>@task.Description</td>
+                                    <td>@task.Assignee.FirstName @task.Assignee.LastName</td>
+                                    <td>@task.Progress%</td>
+                                    <td>@task.Status</td>
+                                    <td>@task.Deadline.ToShortDateString()</td>
+                                    <td class="d-flex justify-content-center">
+                                        <a href="#" class="btn btn-primary mx-2">View/Edit</a>
+
+                                        
+                                        <form action="/dashboard/tasks/delete/@task.Id" method="post">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

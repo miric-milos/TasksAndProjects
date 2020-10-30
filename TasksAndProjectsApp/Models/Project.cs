@@ -14,8 +14,12 @@ namespace TasksAndProjectsApp.Models
         // testing purposes
         public static List<Project> Projects { get; set; } = new List<Project>
         {
-            new Project{Id=0,Name="Cuphead"},
-            new Project{Id=1,Name="Embedded software stuff"}
+            new Project{Id=0,Name="Cuphead", Tasks = new List<Task>
+            {
+                new Task{Id=0, Description = "Render some graphics", Assignee = new AppUser{FirstName="Mile", LastName = "Kitic" }, Progress = 50, Status = Status.InProgress},
+                new Task{Id =1, Description = "Create a 2d platform", Assignee = new AppUser{FirstName="Dusan", LastName = "Spasojevic" }, Progress = 10, Status = Status.New}
+            } },
+            new Project{Id=1,Name="Embedded software stuff", Tasks = new List<Task>()}
         };
 
         // relations
