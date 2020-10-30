@@ -70,7 +70,17 @@ namespace TasksAndProjectsApp.Controllers
         [HttpPost("edit")]
         public IActionResult EditProject(EditProjectViewModel model)
         {
-            return null;
+            int projId = (int)TempData["projId"]; // see ViewEditProject method
+
+            var proj = _projectManager.GetProjectById(projId);
+
+            if(proj != null)
+            {
+                proj.Name = model.Name;
+                return Redirect("/dashboard/projects");
+            }
+
+            return View("ViewEditProject");
         }
     }
 }
