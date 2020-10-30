@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using TasksAndProjectsApp.Infrastructure;
 using TasksAndProjectsApp.Models;
+using TasksAndProjectsApp.Models.ViewModels;
 
 namespace TasksAndProjectsApp.Controllers
 {
@@ -26,7 +27,22 @@ namespace TasksAndProjectsApp.Controllers
             {
                 return Redirect("/");
             }
+            
+            return View(user);
+        }
 
+        [HttpGet("projects")]
+        public IActionResult Projects()
+        {
+            AppUser user = _authManager.GetAuthenticatedUser();
+            if(user.Role != Role.Developer)
+            {
+                ListProjectsViewModel model = new ListProjectsViewModel
+                {
+                    UserRole = user.Role,
+                    // Projects = ProjectManager.GetAllProjects()
+                };
+            }
             return View();
         }
     }

@@ -9,10 +9,12 @@ namespace TasksAndProjectsApp.Infrastructure
 {
     public class AuthManager : IAuthManager
     {
-        private readonly IHttpContextAccessor _httpContext;
+        // if this wasn't needed class would be static 
+        private readonly IHttpContextAccessor _httpContext;        
 
         public AuthManager(IHttpContextAccessor httpContext)
         {
+            // Inject http context
             _httpContext = httpContext;
         }
 

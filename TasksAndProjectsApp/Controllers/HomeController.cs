@@ -36,6 +36,7 @@ namespace TasksAndProjectsApp.Controllers
         {
             if(ModelState.IsValid)
             {
+                // TODO: load user from DB
                 AppUser user = AppUser.Users
                     .FirstOrDefault(u => u.UserName == model.UserName &&
                     u.Password.GetHashCode() == model.Password.GetHashCode());
@@ -44,9 +45,7 @@ namespace TasksAndProjectsApp.Controllers
                 {
                     _authManager.LogIn(user.Id, model.RememberMe);
                     // TODO: check roles
-                    // redirect to dashboard after login
-
-                    return View("Index");
+                    return Redirect("/dashboard");
                 }
 
                 // user not found
@@ -54,6 +53,19 @@ namespace TasksAndProjectsApp.Controllers
             }
 
             return View("Index");
+        }
+
+        [HttpPost("logout")]
+        [ValidateAntiForgeryToken]
+        public IActionResult LogOut()
+        {
+            if (_authManager.UserIsAuthenticated())
+            {
+                _authManager.LogOut();
+                return Redirect("/");
+            }
+
+            throw new Exception("Unknown error occured!");
         }
     }
 }
