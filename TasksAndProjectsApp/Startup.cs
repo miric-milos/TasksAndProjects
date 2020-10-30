@@ -30,6 +30,7 @@ namespace TasksAndProjectsApp
             services.AddHttpContextAccessor();
             services.AddSingleton<IAuthManager, AuthManager>();
             services.AddSingleton<IProjectManager, ProjectManager>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

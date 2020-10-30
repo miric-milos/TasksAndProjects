@@ -17,5 +17,8 @@ namespace TasksAndProjectsApp.Models
             new Project{Id=0,Name="Cuphead"},
             new Project{Id=1,Name="Embedded software stuff"}
         };
+
+        // relations
+        public virtual List<Task> Tasks { get; set; }
     }
 }
