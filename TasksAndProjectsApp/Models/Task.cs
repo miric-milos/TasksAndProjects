@@ -15,8 +15,14 @@ namespace TasksAndProjectsApp.Models
 
         public int Progress { get; set; }
 
-        public DateTime Deadline { get; set; }        
+        public DateTime Deadline { get; set; }
 
+
+        public Task()
+        {
+            Progress = 0;
+            Status = Status.New;
+        }
 
         // relations
         public AppUser Assignee { get; set; }

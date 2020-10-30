@@ -27,8 +27,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-1"></div>
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div class="table-responsive shadow">
                 <table class="table table-light table-striped">
                     <thead>
@@ -61,12 +60,11 @@
                                     <td class="d-flex justify-content-center">
                                         <a href="#" class="btn btn-primary mx-2">View/Edit</a>
 
-                                        
+
                                         <form action="/dashboard/tasks/delete/@task.Id" method="post">
                                             @Html.AntiForgeryToken()
                                             <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
-
                                     </td>
                                 </tr>
                             }
@@ -74,7 +72,8 @@
                     </tbody>
                 </table>
             </div>
+            <a href="/dashboard/tasks/create" class="btn btn-success my-3">Add a task</a>
         </div>
+
     </div>
 </div>
-
