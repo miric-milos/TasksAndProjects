@@ -35,7 +35,10 @@ namespace TasksAndProjectsApp.Controllers
         public IActionResult Projects()
         {
             AppUser user = _authManager.GetAuthenticatedUser();
-            if(user.Role != Role.Developer)
+
+            if (user == null) return Redirect("/");
+
+            if(user.Role != Role.Developer) // all users except developers can manage projects
             {
                 ListProjectsViewModel model = new ListProjectsViewModel
                 {
@@ -45,7 +48,9 @@ namespace TasksAndProjectsApp.Controllers
 
                 return View(model);
             }
-            return View("NotAuthorized" /*Add view!*/);
+
+            // inform user of unauthorized actions
+            return View("NotAuthorized");
         }
     }
 }

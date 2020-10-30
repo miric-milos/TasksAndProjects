@@ -1,0 +1,62 @@
+﻿
+@model TasksAndProjectsApp.Models.ViewModels.ListProjectsViewModel
+
+@{
+    ViewData["Title"] = "Projects";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="container my-5">
+    <div class="d-sm-flex align-items-center justify-content-between my-5 mb-4">
+        <h3 class="h3 mb-0 text-gray-800">Manage projects</h3>
+        <a href="#" class="d-none d-sm-inline-block btn btn-lg btn-success shadow-sm">Create a project</a>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <div class="table-responsive text-center">
+                <table class="table table-primary">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Manage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Projects.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="3">No projects to view, try adding some first</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var proj in Model.Projects)
+                            {
+                                <tr>
+                                    <td>@proj.Id</td>
+                                    <td>@proj.Name</td>
+                                    <td class="d-flex justify-content-center">
+                                        <a href="#" class="btn btn-primary mx-2">View/Edit</a>
+
+                                        <form action="/dashboard/projects/delete/@proj.Id" method="post">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+
+</div>
+
