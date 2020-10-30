@@ -40,10 +40,12 @@ namespace TasksAndProjectsApp.Controllers
                 ListProjectsViewModel model = new ListProjectsViewModel
                 {
                     UserRole = user.Role,
-                    // Projects = ProjectManager.GetAllProjects()
+                    Projects = Project.Projects
                 };
+
+                return View(model);
             }
-            return View();
+            return View("NotAuthorized" /*Add view!*/);
         }
     }
 }

@@ -10,5 +10,12 @@ namespace TasksAndProjectsApp.Models
         public int Id { get; set; } // 'Code'
         public string Name { get; set; }
 
+
+        // testing purposes
+        public static List<Project> Projects { get; set; } = new List<Project>
+        {
+            new Project{Id=0,Name="Cuphead"},
+            new Project{Id=1,Name="Embedded software stuff"}
+        };
     }
 }
