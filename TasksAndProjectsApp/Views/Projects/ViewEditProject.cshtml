@@ -43,8 +43,8 @@
                     <tbody>
                         @if (Model.Tasks.Count == 0)
                         {
-                            <tr>
-                                <td colspan="5">No tasks are assigned to this project</td>
+                            <tr class="text-center">
+                                <td colspan="6">No tasks are assigned to this project</td>
                             </tr>
                         }
                         else
@@ -53,7 +53,12 @@
                             {
                                 <tr>
                                     <td>@task.Description</td>
-                                    <td>@task.Assignee.FirstName @task.Assignee.LastName</td>
+                                    <td>
+                                        @if(task.Assignee == null)
+                                        {
+                                            @: unassigned
+                                        }
+                                    </td>
                                     <td>@task.Progress%</td>
                                     <td>@task.Status</td>
                                     <td>@task.Deadline.ToShortDateString()</td>

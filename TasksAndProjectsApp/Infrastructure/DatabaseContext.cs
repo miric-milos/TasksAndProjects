@@ -10,10 +10,15 @@ namespace TasksAndProjectsApp.Infrastructure
     {
         public DbSet<AppUser> Users { get; set; }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<Task> Tasks { get; set; }
+        public DbSet<AppTask> Tasks { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
+        {
+
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
         }
     }

@@ -13,10 +13,12 @@ namespace TasksAndProjectsApp.Controllers
     public class DashboardController : Controller
     {
         private readonly IAuthManager _authManager;
+        private readonly IProjectManager _projManager;
 
-        public DashboardController(IAuthManager authManager)
+        public DashboardController(IAuthManager authManager, IProjectManager projectManager)
         {
             _authManager = authManager;
+            _projManager = projectManager;
         }
 
         public IActionResult Dashboard()
@@ -43,6 +45,7 @@ namespace TasksAndProjectsApp.Controllers
                 ListProjectsViewModel model = new ListProjectsViewModel
                 {
                     UserRole = user.Role,
+                    Projects = _projManager.GetProjects()
                 };
 
                 return View(model);

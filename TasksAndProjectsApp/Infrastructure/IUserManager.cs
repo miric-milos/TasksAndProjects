@@ -8,6 +8,8 @@ namespace TasksAndProjectsApp.Infrastructure
 {
     public interface IUserManager
     {
-        AppUser GetUserByLoginInfo(string userName, string password);
+        AppUser GetUser(int userId);
+        AppUser GetUser(string userName, string password);
+        void CreateUser(AppUser user, string password);
     }
 }

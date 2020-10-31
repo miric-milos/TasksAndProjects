@@ -32,12 +32,12 @@ namespace TasksAndProjectsApp.Controllers
         }
 
         [HttpPost("create")]
-        public IActionResult CreateProject(CreateProjectViewModel model)
+        public async Task<IActionResult> CreateProject(CreateProjectViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var proj = new Project { Id = 2, Name = model.Name, Tasks = new List<Models.Task>() };
-                _projectManager.CreateProject(proj);
+                var proj = new Project { Name = model.Name };
+                await _projectManager.CreateProjectAsync(proj);
                 return Redirect("/dashboard/projects");
             }
 
@@ -47,7 +47,7 @@ namespace TasksAndProjectsApp.Controllers
         [HttpGet("{projId}")]
         public IActionResult ViewEditProject(int projId)
         {
-            var proj = _projectManager.GetProjectById(projId);
+            var proj = _projectManager.GetProject(projId);
 
             if(proj != null)
             {
@@ -60,23 +60,24 @@ namespace TasksAndProjectsApp.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost("delete/{projId}")]
-        public IActionResult DeleteProject(int projId)
+        public async Task<IActionResult> DeleteProject(int projId)
         {
-            _projectManager.DeleteProject(projId);
+            await _projectManager.DeleteProjectAsync(projId);
             return Redirect("/dashboard/projects");
         }
 
         [ValidateAntiForgeryToken]
         [HttpPost("edit")]
-        public IActionResult EditProject(EditProjectViewModel model)
+        public async Task<IActionResult> EditProject(EditProjectViewModel model)
         {
             int projId = (int)TempData["projId"]; // see ViewEditProject method
 
-            var proj = _projectManager.GetProjectById(projId);
+            var proj = _projectManager.GetProject(projId);
 
             if(proj != null)
             {
                 proj.Name = model.Name;
+                await _projectManager.UpdateProjectAsync(proj);
                 return Redirect("/dashboard/projects");
             }
 

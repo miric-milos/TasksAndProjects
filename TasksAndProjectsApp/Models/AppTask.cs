@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace TasksAndProjectsApp.Models
 {
-    public class Task
+    [Table("Tasks")]
+    public class AppTask
     {
         public int Id { get; set; }
 
@@ -18,7 +20,7 @@ namespace TasksAndProjectsApp.Models
         public DateTime Deadline { get; set; }
 
 
-        public Task()
+        public AppTask()
         {
             Progress = 0;
             Status = Status.New;

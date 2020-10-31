@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,19 +17,57 @@ namespace TasksAndProjectsApp.Infrastructure
             _db = db;
         }
 
-        public void DeleteProject(int projId)
+        public async Task DeleteProjectAsync(int projId)
         {
-            throw new NotImplementedException();
+            Project proj = GetProject(projId);
+
+            if(proj == null)
+            {
+                throw new Exception("Unknown error occured!");
+            }
+
+            _db.Projects.Remove(proj);
+            await _db.SaveChangesAsync();
         }
 
-        public Project GetProjectById(int projId)
+        public Project GetProject(int projId)
         {
-            throw new NotImplementedException();
+            return _db.Projects
+                .Include(p => p.Tasks)
+                .FirstOrDefault(p => p.Id == projId);
         }
 
-        public void CreateProject(Project proj)
+        public async Task CreateProjectAsync(Project proj)
         {
-            throw new NotImplementedException();
+            _db.Projects.Add(proj);
+            await _db.SaveChangesAsync();
+        }
+
+        public List<Project> GetProjects()
+        {
+            return _db.Projects.ToList();
+        }
+
+        public async Task UpdateProjectAsync(Project proj)
+        {
+            _db.Projects.Update(proj);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task AssignTaskToProjectAsync(int projId, AppTask task)
+        {
+            Project proj = GetProject(projId);
+
+            if(proj != null)
+            {
+                proj.Tasks.Add(task);
+                _db.Projects.Update(proj);
+                await _db.SaveChangesAsync();
+            }
+            else
+            {
+                throw new Exception("Unknown error occured");
+            }
         }
     }
 }

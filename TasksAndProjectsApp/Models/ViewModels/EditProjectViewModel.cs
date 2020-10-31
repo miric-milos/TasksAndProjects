@@ -12,6 +12,6 @@ namespace TasksAndProjectsApp.Models.ViewModels
         public string Name { get; set; }
 
         // prop tasks
-        public List<Task> Tasks { get; set; }
+        public List<AppTask> Tasks { get; set; }
     }
 }

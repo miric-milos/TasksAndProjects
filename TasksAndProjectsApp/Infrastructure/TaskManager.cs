@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TasksAndProjectsApp.Models;
 
 namespace TasksAndProjectsApp.Infrastructure
 {
@@ -12,6 +13,12 @@ namespace TasksAndProjectsApp.Infrastructure
         public TaskManager(DatabaseContext db)
         {
             _db = db;
+        }
+
+        public async Task CreateTaskAsync(AppTask task)
+        {
+            _db.Tasks.Add(task);
+            await _db.SaveChangesAsync();
         }
 
         public void DeleteTask(int taskId)

@@ -9,6 +9,6 @@ namespace TasksAndProjectsApp.Models.ViewModels
     {
         public Role UserRole { get; set; }
 
-        public List<Project> Projects { get; set; }
+        public List<Project> Projects { get; set; } = new List<Project>();
     }
 }

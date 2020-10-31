@@ -8,8 +8,11 @@ namespace TasksAndProjectsApp.Infrastructure
 {
     public interface IProjectManager
     {
-        void DeleteProject(int projId);
-        Project GetProjectById(int projId);
-        void CreateProject(Project proj);
+        Task DeleteProjectAsync(int projId);
+        Project GetProject(int projId);
+        Task CreateProjectAsync(Project proj);
+        List<Project> GetProjects();
+        Task UpdateProjectAsync(Project proj);
+        Task AssignTaskToProjectAsync(int projId, AppTask task);
     }
 }

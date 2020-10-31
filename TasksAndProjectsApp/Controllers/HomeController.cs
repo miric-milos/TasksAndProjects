@@ -17,7 +17,7 @@ namespace TasksAndProjectsApp.Controllers
         private readonly IAuthManager _authManager;
         private readonly IUserManager _userManager;
 
-        public HomeController(ILogger<HomeController> logger, IAuthManager authManager, IUserManager userManager)
+        public HomeController(ILogger<HomeController> logger, IAuthManager authManager, IUserManager userManager, DatabaseContext db)
         {
             _logger = logger;
             _authManager = authManager;
@@ -38,7 +38,7 @@ namespace TasksAndProjectsApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                AppUser user = _userManager.GetUserByLoginInfo(model.UserName, model.Password);
+                AppUser user = _userManager.GetUser(model.UserName, model.Password);
 
                 if(user != null)
                 {

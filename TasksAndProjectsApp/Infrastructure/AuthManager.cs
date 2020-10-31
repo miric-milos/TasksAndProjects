@@ -10,19 +10,21 @@ namespace TasksAndProjectsApp.Infrastructure
     public class AuthManager : IAuthManager
     {
         // if this wasn't needed class would be static 
-        private readonly IHttpContextAccessor _httpContext;        
+        private readonly IHttpContextAccessor _httpContext;
+        private readonly IUserManager _userManager;
 
-        public AuthManager(IHttpContextAccessor httpContext)
+        public AuthManager(IHttpContextAccessor httpContext, IUserManager userManager)
         {
             // Inject http context
             _httpContext = httpContext;
+            _userManager = userManager;
         }
 
         public AppUser GetAuthenticatedUser()
         {
-            int userid = int.Parse(GetCookieValue("userid"));
+            int userId = int.Parse(GetCookieValue("userid"));
 
-            AppUser user = null;
+            AppUser user = _userManager.GetUser(userId);
 
             return user;
         }
