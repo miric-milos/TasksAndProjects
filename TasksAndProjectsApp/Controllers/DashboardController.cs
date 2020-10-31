@@ -43,7 +43,6 @@ namespace TasksAndProjectsApp.Controllers
                 ListProjectsViewModel model = new ListProjectsViewModel
                 {
                     UserRole = user.Role,
-                    Projects = Project.Projects
                 };
 
                 return View(model);

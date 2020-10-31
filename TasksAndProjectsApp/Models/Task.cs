@@ -25,7 +25,7 @@ namespace TasksAndProjectsApp.Models
         }
 
         // relations
-        public AppUser Assignee { get; set; }
+        public virtual AppUser Assignee { get; set; }
 
         public virtual Project Project { get; set; }
     }

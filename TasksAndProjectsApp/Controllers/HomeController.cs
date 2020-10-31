@@ -15,17 +15,19 @@ namespace TasksAndProjectsApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IAuthManager _authManager;
+        private readonly IUserManager _userManager;
 
-        public HomeController(ILogger<HomeController> logger, IAuthManager authManager)
+        public HomeController(ILogger<HomeController> logger, IAuthManager authManager, IUserManager userManager)
         {
-            _logger      = logger;
+            _logger = logger;
             _authManager = authManager;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
         {
-            if (_authManager.UserIsAuthenticated()) 
-                return Redirect("/dashboard");            
+            if (_authManager.UserIsAuthenticated())
+                return Redirect("/dashboard");
 
             return View();
         }
@@ -34,17 +36,13 @@ namespace TasksAndProjectsApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult LogIn(LoginViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                // TODO: load user from DB
-                AppUser user = AppUser.Users
-                    .FirstOrDefault(u => u.UserName == model.UserName &&
-                    u.Password.GetHashCode() == model.Password.GetHashCode());
+                AppUser user = _userManager.GetUserByLoginInfo(model.UserName, model.Password);
 
                 if(user != null)
                 {
                     _authManager.LogIn(user.Id, model.RememberMe);
-                    // TODO: check roles
                     return Redirect("/dashboard");
                 }
 

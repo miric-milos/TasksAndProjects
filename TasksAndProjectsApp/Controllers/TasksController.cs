@@ -46,7 +46,7 @@ namespace TasksAndProjectsApp.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                // TODO add task to db
             }
             return null;
         }

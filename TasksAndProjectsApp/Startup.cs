@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,9 +28,16 @@ namespace TasksAndProjectsApp
             services.AddControllersWithViews();
             // custom dependencies
             services.AddHttpContextAccessor();
-            services.AddSingleton<IAuthManager, AuthManager>();
-            services.AddSingleton<IProjectManager, ProjectManager>();
-            services.AddSingleton<ITaskManager, TaskManager>();
+            services.AddScoped<IAuthManager, AuthManager>();
+            services.AddScoped<IProjectManager, ProjectManager>();
+            services.AddScoped<ITaskManager, TaskManager>();
+            services.AddScoped<IUserManager, UserManager>();
+
+            // db
+            services.AddDbContext<DatabaseContext>(o =>
+            {
+                o.UseSqlServer(Configuration.GetConnectionString("TasksAndProjects"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

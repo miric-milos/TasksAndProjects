@@ -21,10 +21,10 @@ namespace TasksAndProjectsApp.Models
         public Role Role { get; set; }
 
 
-        public static List<AppUser> Users { get; set; } = new List<AppUser>
-        {
-            new AppUser{Id=0,FirstName="Milos",LastName="Miric",Role=Role.Administrator ,UserName="miledizna",Password="test123"},
-            new AppUser{Id=1,UserName="canekurbla",Password="test123"}
-        };
+        //public static List<AppUser> Users { get; set; } = new List<AppUser>
+        //{
+        //    new AppUser{Id=0,FirstName="Milos",LastName="Miric",Role=Role.Administrator ,UserName="miledizna",Password="test123"},
+        //    new AppUser{Id=1,UserName="canekurbla",Password="test123"}
+        //};
     }
 }

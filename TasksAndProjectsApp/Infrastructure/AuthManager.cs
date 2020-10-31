@@ -22,7 +22,7 @@ namespace TasksAndProjectsApp.Infrastructure
         {
             int userid = int.Parse(GetCookieValue("userid"));
 
-            AppUser user = AppUser.Users.FirstOrDefault(u => u.Id == userid);
+            AppUser user = null;
 
             return user;
         }
