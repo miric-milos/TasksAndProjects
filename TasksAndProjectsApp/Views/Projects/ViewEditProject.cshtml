@@ -56,7 +56,11 @@
                                     <td>
                                         @if(task.Assignee == null)
                                         {
-                                            @: unassigned
+                                            @: Unassigned
+                                        }
+                                        else
+                                        {
+                                            @task.Assignee.FirstName @task.Assignee.LastName
                                         }
                                     </td>
                                     <td>@task.Progress%</td>
