@@ -21,9 +21,25 @@ namespace TasksAndProjectsApp.Infrastructure
             await _db.SaveChangesAsync();
         }
 
-        public void DeleteTask(int taskId)
+        public async Task DeleteTaskAsync(int taskId)
         {
-            // TODO: create db
+            var task = GetTask(taskId);
+
+            if(task != null)
+            {
+                _db.Tasks.Remove(task);
+                await _db.SaveChangesAsync();
+            }
+            else
+            {
+                throw new Exception("Unknown error occured!");
+            }
+        }
+
+        public AppTask GetTask(int taskId)
+        {
+            return _db.Tasks
+                .FirstOrDefault(t => t.Id == taskId);
         }
     }
 }

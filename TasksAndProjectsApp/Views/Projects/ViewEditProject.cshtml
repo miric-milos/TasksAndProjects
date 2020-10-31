@@ -66,9 +66,8 @@
                                     <td>@task.Progress%</td>
                                     <td>@task.Status</td>
                                     <td>@task.Deadline.ToShortDateString()</td>
-                                    <td class="d-flex justify-content-center">
+                                    <td class="d-flex">
                                         <a href="#" class="btn btn-primary mx-2">View/Edit</a>
-
 
                                         <form action="/dashboard/tasks/delete/@task.Id" method="post">
                                             @Html.AntiForgeryToken()

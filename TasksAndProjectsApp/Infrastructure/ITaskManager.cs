@@ -8,7 +8,8 @@ namespace TasksAndProjectsApp.Infrastructure
 {
     public interface ITaskManager
     {
-        void DeleteTask(int taskId);
+        Task DeleteTaskAsync(int taskId);
         Task CreateTaskAsync(AppTask task);
+        AppTask GetTask(int taskId);
     }
 }

@@ -25,10 +25,10 @@ namespace TasksAndProjectsApp.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost("delete/{taskId}")]
-        public IActionResult DeleteTask(int taskId)
+        public async Task<IActionResult> DeleteTask(int taskId)
         {
             int projId = (int)TempData["projId"]; // ViewEditProject method
-            _taskManager.DeleteTask(taskId);
+            await _taskManager.DeleteTaskAsync(taskId);
             return Redirect("/dashboard/projects/" + projId);
         }
 
