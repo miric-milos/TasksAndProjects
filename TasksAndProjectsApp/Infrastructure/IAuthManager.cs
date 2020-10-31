@@ -8,7 +8,7 @@ namespace TasksAndProjectsApp.Infrastructure
 {
     public interface IAuthManager
     {
-        void LogIn(int userId, bool isPersistant);
+        void LogIn(AppUser user, bool isPersistant);
         void LogOut();
         bool UserIsAuthenticated();
         AppUser GetAuthenticatedUser();

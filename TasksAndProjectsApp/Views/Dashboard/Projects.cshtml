@@ -40,7 +40,7 @@
                                     <td>@proj.Id</td>
                                     <td>@proj.Name</td>
                                     <td class="d-flex justify-content-center">
-                                        <a href="/dashboard/projects/@proj.Id" class="btn btn-primary mx-2">View/Edit</a>
+                                        <a href="/dashboard/projects/@proj.Id/" class="btn btn-primary mx-2">View/Edit</a>
 
                                         <form action="/dashboard/projects/delete/@proj.Id" method="post">
                                             @Html.AntiForgeryToken()

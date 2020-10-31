@@ -44,7 +44,7 @@ namespace TasksAndProjectsApp.Controllers
             return View("ViewCreateProject");
         }
 
-        [HttpGet("{projId}")]
+        [HttpGet("{projId}/")]
         public IActionResult ViewEditProject(int projId)
         {
             var proj = _projectManager.GetProject(projId);

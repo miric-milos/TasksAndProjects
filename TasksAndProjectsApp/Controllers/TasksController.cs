@@ -65,5 +65,19 @@ namespace TasksAndProjectsApp.Controllers
 
             return View("Error");
         }
+
+        [HttpGet("{taskId}")]
+        public IActionResult ViewEditTask(int taskId)
+        {
+            int projId = (int)TempData["projId"];
+
+            AppTask task = _taskManager.GetTask(taskId);
+            if(task != null)
+            {
+                return View(task);
+            }
+
+            return View("Error");
+        }
     }
 }

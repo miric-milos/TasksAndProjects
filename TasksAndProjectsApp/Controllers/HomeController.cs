@@ -42,7 +42,7 @@ namespace TasksAndProjectsApp.Controllers
 
                 if(user != null)
                 {
-                    _authManager.LogIn(user.Id, model.RememberMe);
+                    _authManager.LogIn(user, model.RememberMe);
                     return Redirect("/dashboard");
                 }
 

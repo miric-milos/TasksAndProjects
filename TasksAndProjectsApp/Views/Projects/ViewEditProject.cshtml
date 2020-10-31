@@ -54,7 +54,7 @@
                                 <tr>
                                     <td>@task.Description</td>
                                     <td>
-                                        @if(task.Assignee == null)
+                                        @if (task.Assignee == null)
                                         {
                                             @: Unassigned
                                         }
@@ -67,7 +67,7 @@
                                     <td>@task.Status</td>
                                     <td>@task.Deadline.ToShortDateString()</td>
                                     <td class="d-flex">
-                                        <a href="#" class="btn btn-primary mx-2">View/Edit</a>
+                                        <a href="/dashboard/tasks/@task.Id" class="btn btn-primary mx-2">View/Edit</a>
 
                                         <form action="/dashboard/tasks/delete/@task.Id" method="post">
                                             @Html.AntiForgeryToken()

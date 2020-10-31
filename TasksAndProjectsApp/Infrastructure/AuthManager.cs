@@ -29,28 +29,36 @@ namespace TasksAndProjectsApp.Infrastructure
             return user;
         }
 
-        public void LogIn(int userId, bool isPersistant)
+        public void LogIn(AppUser user, bool isPersistant)
         {
             CookieOptions options = new CookieOptions();
-
             options.Expires = isPersistant ? DateTime.Now.AddDays(365) : DateTime.Now.AddHours(1);
 
-            // set cookie
-            _httpContext.HttpContext.Response.Cookies.Append("userid", userId.ToString(), options);
+            SetCookie("userId", user.Id.ToString(), options);
+            SetCookie("role", user.Role.ToString(), options);
         }
 
         public void LogOut()
         {
-            if (IsCookieSet("userid"))
-                _httpContext.HttpContext.Response.Cookies.Delete("userid");            
+            if (IsCookieSet("userid") && IsCookieSet("role"))
+            {
+                _httpContext.HttpContext.Response.Cookies.Delete("userid");
+                _httpContext.HttpContext.Response.Cookies.Delete("role");
+            }                          
         }
 
         public bool UserIsAuthenticated()
         {
-            return IsCookieSet("userid");
+            return IsCookieSet("userid") && IsCookieSet("role");
         }
 
         #region private
+        private void SetCookie(string key, string value, CookieOptions options)
+        {
+            // set cookie
+            _httpContext.HttpContext.Response.Cookies.Append(key, value, options);
+        }
+
         private bool IsCookieSet(string cookieName)
         {
             return !string.IsNullOrEmpty(
