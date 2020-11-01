@@ -1,0 +1,48 @@
+﻿@model TasksAndProjectsApp.Models.ViewModels.CreateUserViewModel
+
+<div class="card shadow">
+    <div class="card-header bg-primary">
+        <p class="text-white my-auto">Create a user</p>
+    </div>
+    <div class="card-body">
+        <form action="/dashboard/users/create" method="post">
+
+            @Html.AntiForgeryToken()
+            
+            <section id="errorMessage">
+                <p class="font-weight-bold text-danger">
+                    @TempData["createUserErrorMessage"]
+                </p>
+            </section>
+
+            <div class="form-group">
+                <label for="UserName">Username</label>
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="Password">Password</label>
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="FirstName">First name</label>
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="LastName">Last name</label>
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="Email">Email</label>
+                @Html.TextBoxFor(m => m.Email, new { @type = "email", @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="Role">Role</label>
+                @Html.DropDownListFor(m => m.Role,
+                    new SelectList(Enum.GetValues(typeof(TasksAndProjectsApp.Models.Role))),
+                    new { @class = "form-control" })
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">Create</button>
+        </form>
+    </div>
+</div>

@@ -14,11 +14,13 @@ namespace TasksAndProjectsApp.Controllers
     {
         private readonly IAuthManager _authManager;
         private readonly IProjectManager _projManager;
+        private readonly IUserManager _userManager;
 
-        public DashboardController(IAuthManager authManager, IProjectManager projectManager)
+        public DashboardController(IAuthManager authManager, IProjectManager projectManager, IUserManager userManager)
         {
             _authManager = authManager;
             _projManager = projectManager;
+            _userManager = userManager;
         }
 
         public IActionResult Dashboard()
@@ -52,6 +54,19 @@ namespace TasksAndProjectsApp.Controllers
             }
 
             // inform user of unauthorized actions
+            return View("NotAuthorized");
+        }
+
+        [HttpGet("users")]
+        public IActionResult Users()
+        {
+            if (_authManager.UserIsAuthenticated())
+            {
+                var users = _userManager.GetUsers();
+
+                return View(users);
+            }
+
             return View("NotAuthorized");
         }
     }

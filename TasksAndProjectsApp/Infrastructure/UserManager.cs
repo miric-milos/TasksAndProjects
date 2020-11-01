@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.Xml;
@@ -17,13 +18,13 @@ namespace TasksAndProjectsApp.Infrastructure
             _db = db;
         }
 
-        public void CreateUser(AppUser user, string password)
+        public async Task CreateUserAsync(AppUser user, string password)
         {
             byte[] passwordHash = Hash.HashString(password);
 
             user.Password = passwordHash;
             _db.Users.Add(user);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
         }
 
         public AppUser GetUser(int userId)

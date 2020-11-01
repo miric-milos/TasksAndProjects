@@ -31,7 +31,7 @@
             <div class="table-responsive shadow">
                 <table class="table table-light table-striped">
                     <thead>
-                        <tr>
+                        <tr class="text-center">
                             <th>Description</th>
                             <th>Assignee</th>
                             <th>Progress</th>
@@ -51,12 +51,13 @@
                         {
                             foreach (var task in Model.Tasks)
                             {
-                                <tr>
+                                <tr class="text-center">
                                     <td>@task.Description</td>
                                     <td>
                                         @if (task.Assignee == null)
                                         {
-                                            @: Unassigned
+                                            @: Unassigned <br />
+                                            @: <a href="#">Assign</a>
                                         }
                                         else
                                         {
