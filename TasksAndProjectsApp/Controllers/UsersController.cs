@@ -12,11 +12,13 @@ namespace TasksAndProjectsApp.Controllers
     [Route("dashboard/users")]
     public class UsersController : Controller
     {
-        private readonly IUserManager _usermanager;
+        private readonly IUserManager _userManager;
+        private readonly ITaskManager _taskManager;
 
-        public UsersController(IUserManager usermanager)
+        public UsersController(IUserManager userManager, ITaskManager taskManager)
         {
-            _usermanager = usermanager;
+            _userManager = userManager;
+            _taskManager = taskManager;
         }
 
         [ValidateAntiForgeryToken]
@@ -34,14 +36,36 @@ namespace TasksAndProjectsApp.Controllers
                     UserName = model.UserName                    
                 };
 
-                await _usermanager.CreateUserAsync(user, model.Password);                
+                await _userManager.CreateUserAsync(user, model.Password);                
             }
             else
             {
                 TempData["createUserErrorMessage"] = 
                     "Something went wrong. Either some fields were empty or data formats were invalid, please try again.";
             }
+
             return Redirect("/dashboard/users");
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost("assign/{userId}")]
+        public async Task<IActionResult> AssignTaskToUser(int userId)
+        {
+            var task = _taskManager.GetTask((int)TempData["taskId"]);
+            var user = _userManager.GetUser(userId);
+
+            if(task != null && user != null)
+            {
+                user.Tasks.Add(task);
+                task.Assignee = user;
+
+                await _userManager.UpdateUserAsync(user);
+                await _taskManager.UpdateTaskAsync(task);
+
+                return Redirect("/dashboard/projects/" + task.Project.Id);
+            }
+
+            return null;
         }
     }
 }

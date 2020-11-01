@@ -49,5 +49,17 @@ namespace TasksAndProjectsApp.Infrastructure
         {
             return _db.Users.ToList();
         }
+
+        public IEnumerable<AppUser> GetUsers(Role role)
+        {
+            var users = _db.Users.Where(u => u.Role == role);
+            return users;
+        }
+
+        public async Task UpdateUserAsync(AppUser user)
+        {
+            _db.Users.Update(user);
+            await _db.SaveChangesAsync();
+        }
     }
 }

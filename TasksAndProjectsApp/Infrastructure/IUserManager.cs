@@ -12,5 +12,7 @@ namespace TasksAndProjectsApp.Infrastructure
         AppUser GetUser(string userName, string password);
         Task CreateUserAsync(AppUser user, string password);
         List<AppUser> GetUsers();
+        IEnumerable<AppUser> GetUsers(Role role);
+        Task UpdateUserAsync(AppUser user);
     }
 }

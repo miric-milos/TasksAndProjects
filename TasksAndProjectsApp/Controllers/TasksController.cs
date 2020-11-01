@@ -15,13 +15,15 @@ namespace TasksAndProjectsApp.Controllers
         private readonly ITaskManager _taskManager;
         private readonly IAuthManager _authManager;
         private readonly IProjectManager _projManager;
+        private readonly IUserManager _userManager;
 
         public TasksController(ITaskManager taskManager, IAuthManager authManager, 
-            IProjectManager projectManager)
+            IProjectManager projectManager, IUserManager userManager)
         {
             _taskManager = taskManager;
             _authManager = authManager;
             _projManager = projectManager;
+            _userManager = userManager;
         }
 
         [ValidateAntiForgeryToken]
@@ -115,6 +117,21 @@ namespace TasksAndProjectsApp.Controllers
             }
 
             return View("ViewEditTask");
+        }
+
+        [HttpGet("assign/{taskId}")]
+        public IActionResult AssignTaskView(int taskId)
+        {
+            if (_authManager.UserIsAuthenticated())
+            {
+                TempData["taskId"] = taskId;
+
+                IEnumerable<AppUser> users = _userManager.GetUsers(Role.Developer);
+
+                return View(users);
+            }
+
+            return View("NotAuthorized");
         }
     }
 }

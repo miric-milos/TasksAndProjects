@@ -19,6 +19,6 @@ namespace TasksAndProjectsApp.Models
         public string Email { get; set; }
         public Role Role { get; set; }
 
-        public virtual List<AppTask> Tasks { get; set; }
+        public virtual List<AppTask> Tasks { get; set; } = new List<AppTask>();
     }
 }

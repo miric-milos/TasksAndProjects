@@ -34,6 +34,7 @@ namespace TasksAndProjectsApp.Infrastructure
         {
             return _db.Projects
                 .Include(p => p.Tasks)
+                .ThenInclude(t => t.Assignee)
                 .FirstOrDefault(p => p.Id == projId);
         }
 

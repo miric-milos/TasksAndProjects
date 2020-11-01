@@ -1,0 +1,57 @@
+﻿@model IEnumerable<TasksAndProjectsApp.Models.AppUser>
+@{
+    ViewData["Title"] = "AssignTaskView";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="container-fluid my-5">
+    <h4>Choose a developer for task assignment</h4>
+    <div class="row my-5">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="table-responsive">
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Action</th>
+                            <th>Username</th>
+                            <th>First name</th>
+                            <th>Last name</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model.Count() == 0)
+                        {
+                            <tr class="text-center">
+                                <td colspan="4">No users to display</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var user in Model)
+                            {
+                                <tr class="text-center">
+                                    <td>
+                                        <form action="/dashboard/users/assign/@user.Id" method="post">
+                                            @Html.AntiForgeryToken()
+                                            <button class="btn btn-sm btn-success" type="submit">Assign</button>
+                                        </form>
+                                    </td>
+                                    <td>@user.UserName</td>
+                                    <td>@user.FirstName</td>
+                                    <td>@user.LastName</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>
+

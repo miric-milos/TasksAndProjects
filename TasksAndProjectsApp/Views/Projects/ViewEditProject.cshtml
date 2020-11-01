@@ -57,11 +57,11 @@
                                         @if (task.Assignee == null)
                                         {
                                             @: Unassigned <br />
-                                            @: <a href="#">Assign</a>
+                                            @: <a href="/dashboard/tasks/assign/@task.Id">Assign</a>
                                         }
                                         else
                                         {
-                                            @task.Assignee.FirstName @task.Assignee.LastName
+                                            @task.Assignee.UserName
                                         }
                                     </td>
                                     <td>@task.Progress%</td>
