@@ -11,5 +11,6 @@ namespace TasksAndProjectsApp.Infrastructure
         AppUser GetUser(int userId);
         AppUser GetUser(string userName, string password);
         void CreateUser(AppUser user, string password);
+        List<AppUser> GetUsers();
     }
 }

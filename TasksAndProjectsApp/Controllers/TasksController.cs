@@ -16,7 +16,8 @@ namespace TasksAndProjectsApp.Controllers
         private readonly IAuthManager _authManager;
         private readonly IProjectManager _projManager;
 
-        public TasksController(ITaskManager taskManager, IAuthManager authManager, IProjectManager projectManager)
+        public TasksController(ITaskManager taskManager, IAuthManager authManager, 
+            IProjectManager projectManager)
         {
             _taskManager = taskManager;
             _authManager = authManager;
@@ -69,15 +70,51 @@ namespace TasksAndProjectsApp.Controllers
         [HttpGet("{taskId}")]
         public IActionResult ViewEditTask(int taskId)
         {
-            int projId = (int)TempData["projId"];
-
             AppTask task = _taskManager.GetTask(taskId);
+
             if(task != null)
             {
-                return View(task);
+                TempData["taskId"] = task.Id;
+
+                var model = new EditTaskViewModel
+                {
+                    Description = task.Description,
+                    Progress = task.Progress,
+                    Status = task.Status,
+                    Deadline = task.Deadline,
+                };
+
+                return View(model);
             }
 
             return View("Error");
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost("edit")]
+        public async Task<IActionResult> UpdateTask(EditTaskViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                int taskId = (int)TempData["taskId"];
+                var task = _taskManager.GetTask(taskId);
+
+                if(task != null)
+                {
+                    task.Description = model.Description;
+                    task.Deadline = model.Deadline;
+                    task.Progress = model.Progress;
+                    task.Status = model.Status;
+
+                    await _taskManager.UpdateTaskAsync(task);
+
+                    return Redirect("/dashboard/projects/" + task.Project.Id);
+                }
+
+                return View("Error");
+            }
+
+            return View("ViewEditTask");
         }
     }
 }

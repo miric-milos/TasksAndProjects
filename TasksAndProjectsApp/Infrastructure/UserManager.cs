@@ -43,5 +43,10 @@ namespace TasksAndProjectsApp.Infrastructure
 
             return user;
         }
+
+        public List<AppUser> GetUsers()
+        {
+            return _db.Users.ToList();
+        }
     }
 }

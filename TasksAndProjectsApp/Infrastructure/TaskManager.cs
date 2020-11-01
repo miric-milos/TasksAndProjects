@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -39,7 +40,14 @@ namespace TasksAndProjectsApp.Infrastructure
         public AppTask GetTask(int taskId)
         {
             return _db.Tasks
+                .Include(t => t.Project)
                 .FirstOrDefault(t => t.Id == taskId);
+        }
+
+        public async Task UpdateTaskAsync(AppTask task)
+        {
+            _db.Tasks.Update(task);
+            await _db.SaveChangesAsync();
         }
     }
 }

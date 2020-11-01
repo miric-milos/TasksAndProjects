@@ -11,5 +11,6 @@ namespace TasksAndProjectsApp.Infrastructure
         Task DeleteTaskAsync(int taskId);
         Task CreateTaskAsync(AppTask task);
         AppTask GetTask(int taskId);
+        Task UpdateTaskAsync(AppTask task);
     }
 }

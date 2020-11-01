@@ -44,7 +44,7 @@ namespace TasksAndProjectsApp.Controllers
             return View("ViewCreateProject");
         }
 
-        [HttpGet("{projId}/")]
+        [HttpGet("{projId}")]
         public IActionResult ViewEditProject(int projId)
         {
             var proj = _projectManager.GetProject(projId);
@@ -70,15 +70,20 @@ namespace TasksAndProjectsApp.Controllers
         [HttpPost("edit")]
         public async Task<IActionResult> EditProject(EditProjectViewModel model)
         {
-            int projId = (int)TempData["projId"]; // see ViewEditProject method
-
-            var proj = _projectManager.GetProject(projId);
-
-            if(proj != null)
+            if (ModelState.IsValid)
             {
-                proj.Name = model.Name;
-                await _projectManager.UpdateProjectAsync(proj);
-                return Redirect("/dashboard/projects");
+                int projId = (int)TempData["projId"]; // see ViewEditProject method
+
+                var proj = _projectManager.GetProject(projId);
+
+                if(proj != null)
+                {
+                    proj.Name = model.Name;
+                    await _projectManager.UpdateProjectAsync(proj);
+                    return Redirect("/dashboard/projects");
+                }
+
+                return View("ViewEditProject");
             }
 
             return View("ViewEditProject");
