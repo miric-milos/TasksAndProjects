@@ -41,13 +41,16 @@
                                     <td>@proj.Name</td>
                                     <td class="d-flex justify-content-center">
                                         <a href="/dashboard/projects/@proj.Id/" class="btn btn-primary mx-2">View/Edit</a>
+                                        @if (Context.Request.Cookies["role"] == "Administrator")
+                                        {
 
-                                        <form action="/dashboard/projects/delete/@proj.Id" method="post">
-                                            @Html.AntiForgeryToken()
-                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                        </form>
-
+                                            <form action="/dashboard/projects/delete/@proj.Id" method="post">
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        }
                                     </td>
+
                                 </tr>
                             }
                         }

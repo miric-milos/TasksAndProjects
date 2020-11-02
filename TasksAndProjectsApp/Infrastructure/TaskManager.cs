@@ -44,6 +44,21 @@ namespace TasksAndProjectsApp.Infrastructure
                 .FirstOrDefault(t => t.Id == taskId);
         }
 
+        public async Task UnassignFromTaskAsync(int userId)
+        {
+            var tasks = _db.Tasks
+                .Include(t => t.Assignee)
+                .Where(t => t.Assignee.Id == userId);
+
+            foreach(var task in tasks)
+            {
+                task.Assignee = null;
+            }
+
+            _db.UpdateRange(tasks);
+            await _db.SaveChangesAsync();
+        }
+
         public async Task UpdateTaskAsync(AppTask task)
         {
             _db.Tasks.Update(task);

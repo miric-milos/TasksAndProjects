@@ -19,6 +19,10 @@
                             <th>Last name</th>
                             <th>Email</th>
                             <th>Role</th>
+                            @if (Context.Request.Cookies["role"] == "Administrator")
+                            {
+                                <th>Manage</th>
+                            }
                         </tr>
                     </thead>
 
@@ -39,6 +43,21 @@
                                     <td>@user.LastName</td>
                                     <td>@user.Email</td>
                                     <td>@user.Role</td>
+
+                                    @if (Context.Request.Cookies["role"] == "Administrator")
+                                    {
+                                        <td class="d-flex">
+                                            <a href="/dashboard/users/@user.Id" class="btn btn-primary mx-2">View/Edit</a>
+
+                                            <form action="/dashboard/users/delete/@user.Id" method="post">
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </td>
+
+                                    }
+
+
                                 </tr>
                             }
                         }
@@ -48,8 +67,11 @@
             </div>
         </div>
         <div class="col-md-4">
-            @await Html.PartialAsync("/Views/Users/CreateUserPartial.cshtml",
-                    new TasksAndProjectsApp.Models.ViewModels.CreateUserViewModel())
+            @if (Context.Request.Cookies["role"] == "Administrator")
+            {
+                @await Html.PartialAsync("/Views/Users/CreateUserPartial.cshtml",
+                        new TasksAndProjectsApp.Models.ViewModels.CreateUserViewModel())
+            }
         </div>
     </div>
 

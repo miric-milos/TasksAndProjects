@@ -14,11 +14,13 @@ namespace TasksAndProjectsApp.Controllers
     {
         private readonly IUserManager _userManager;
         private readonly ITaskManager _taskManager;
+        private readonly IAuthManager _authManager;
 
-        public UsersController(IUserManager userManager, ITaskManager taskManager)
+        public UsersController(IUserManager userManager, ITaskManager taskManager, IAuthManager authManager)
         {
             _userManager = userManager;
             _taskManager = taskManager;
+            _authManager = authManager;
         }
 
         [ValidateAntiForgeryToken]
@@ -66,6 +68,20 @@ namespace TasksAndProjectsApp.Controllers
             }
 
             return null;
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost("delete/{userId}")]
+        public async Task<IActionResult> DeleteUser(int userId)
+        {
+            if (_authManager.UserIsAuthenticated())
+            {
+                await _taskManager.UnassignFromTaskAsync(userId);
+                await _userManager.DeleteUserAsync(userId);
+                return Redirect("/dashboard/users");
+            }
+
+            return View("NotAuthorized");
         }
     }
 }

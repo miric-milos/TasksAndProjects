@@ -14,5 +14,6 @@ namespace TasksAndProjectsApp.Infrastructure
         List<AppUser> GetUsers();
         IEnumerable<AppUser> GetUsers(Role role);
         Task UpdateUserAsync(AppUser user);
+        Task DeleteUserAsync(int userId);
     }
 }

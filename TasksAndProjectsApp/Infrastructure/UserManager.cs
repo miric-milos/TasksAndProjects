@@ -27,6 +27,21 @@ namespace TasksAndProjectsApp.Infrastructure
             await _db.SaveChangesAsync();
         }
 
+        public async Task DeleteUserAsync(int userId)
+        {
+            var user = GetUser(userId);
+
+            if(user != null)
+            {
+                _db.Users.Remove(user);
+                await _db.SaveChangesAsync();
+            }
+            else
+            {
+                throw new Exception("Unknown error occured!");
+            }
+        }
+
         public AppUser GetUser(int userId)
         {
             AppUser user = _db.Users

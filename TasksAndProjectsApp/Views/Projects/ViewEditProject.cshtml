@@ -6,27 +6,31 @@
 
 <div class="container-fluid my-5">
     <div class="row my-5">
-        <div class="col-md-3">
-            <div class="card shadow">
-                <div class="card-header bg-primary">
-                    <h4 class="text-white my-auto">Edit project details</h4>
-                </div>
-                <div class="card-body">
+        @if (Context.Request.Cookies["role"] == "Administrator")
+        {
 
-                    <form action="/dashboard/projects/edit" method="post">
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary("", new { @class = "text-danger" })
-                        <div class="form-group">
-                            <label for="Name">Project name</label>
-                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-                        </div>
+            <div class="col-md-3">
+                <div class="card shadow">
+                    <div class="card-header bg-primary">
+                        <h4 class="text-white my-auto">Edit project details</h4>
+                    </div>
+                    <div class="card-body">
 
-                        <button type="submit" class="btn btn-outline-primary">Save changes</button>
-                    </form>
+                        <form action="/dashboard/projects/edit" method="post">
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary("", new { @class = "text-danger" })
+                            <div class="form-group">
+                                <label for="Name">Project name</label>
+                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                            </div>
 
+                            <button type="submit" class="btn btn-outline-primary">Save changes</button>
+                        </form>
+
+                    </div>
                 </div>
             </div>
-        </div>
+        }
         <div class="col-md-9">
             <div class="table-responsive shadow">
                 <table class="table table-light table-striped">
@@ -37,7 +41,10 @@
                             <th>Progress</th>
                             <th>Status</th>
                             <th>Deadline</th>
-                            <th>Manage</th>
+                            @if (Context.Request.Cookies["role"] == "Administrator")
+                            {
+                                <th>Manage</th>
+                            }
                         </tr>
                     </thead>
                     <tbody>
@@ -67,14 +74,17 @@
                                     <td>@task.Progress%</td>
                                     <td>@task.Status</td>
                                     <td>@task.Deadline.ToShortDateString()</td>
-                                    <td class="d-flex">
-                                        <a href="/dashboard/tasks/@task.Id" class="btn btn-primary mx-2">View/Edit</a>
+                                    @if (Context.Request.Cookies["role"] == "Administrator")
+                                    {
+                                        <td class="d-flex">
+                                            <a href="/dashboard/tasks/@task.Id" class="btn btn-primary mx-2">View/Edit</a>
 
-                                        <form action="/dashboard/tasks/delete/@task.Id" method="post">
-                                            @Html.AntiForgeryToken()
-                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                        </form>
-                                    </td>
+                                            <form action="/dashboard/tasks/delete/@task.Id" method="post">
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </td>
+                                    }
                                 </tr>
                             }
                         }

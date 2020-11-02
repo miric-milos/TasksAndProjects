@@ -17,9 +17,5 @@ namespace TasksAndProjectsApp.Infrastructure
         {
 
         }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-        }
     }
 }
