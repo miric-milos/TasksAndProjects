@@ -25,14 +25,25 @@ namespace TasksAndProjectsApp.Controllers
 
         public IActionResult Dashboard()
         {
-            AppUser user = _authManager.GetAuthenticatedUser();
-
-            if(user == null)
+            var user = _authManager.GetAuthenticatedUser();
+            if (user != null && user.Role == Role.Developer)
             {
-                return Redirect("/");
+                return Redirect("/dashboard/tasks");
             }
-            
-            return View(user);
+            // load projects
+            var projects = _projManager.GetProjects();
+            var model = new List<ProjectsProgressViewModel>();
+
+            foreach (var p in projects)
+            {
+                model.Add(new ProjectsProgressViewModel
+                {
+                    Progress = _projManager.GetProjectProgress(p.Id),
+                    ProjectName = p.Name
+                });
+            }
+
+            return View(model);
         }
 
         [HttpGet("projects")]
@@ -42,7 +53,7 @@ namespace TasksAndProjectsApp.Controllers
 
             if (user == null) return Redirect("/");
 
-            if(user.Role != Role.Developer) // all users except developers can manage projects
+            if (user.Role != Role.Developer) // all users except developers can manage projects
             {
                 ListProjectsViewModel model = new ListProjectsViewModel
                 {

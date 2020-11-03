@@ -112,7 +112,7 @@ namespace TasksAndProjectsApp.Controllers
             if (ModelState.IsValid)
             {
                 int taskId = (int)TempData["taskId"];
-                var task = _taskManager.GetTask(taskId);
+                AppTask task = _taskManager.GetTask(taskId);
 
                 if(task != null)
                 {

@@ -23,4 +23,35 @@
             </div>
         }
     </div>
+
+    <section id="unassignedTasks">
+        <div class="row my-5">
+            <h4>Unassigned tasks</h4>
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Progress</th>
+                                <th>Deadline</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var task in Model.Where(t => t.Assignee == null))
+                            {
+                                <tr class="text-center">
+                                    <td>@task.Description</td>
+                                    <td>@task.Status</td>
+                                    <td>@task.Progress</td>
+                                    <td>@task.Deadline.ToShortDateString()</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>

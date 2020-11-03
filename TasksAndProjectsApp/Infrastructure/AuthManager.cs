@@ -36,20 +36,22 @@ namespace TasksAndProjectsApp.Infrastructure
 
             SetCookie("userId", user.Id.ToString(), options);
             SetCookie("role", user.Role.ToString(), options);
+            SetCookie("userName", user.UserName, options);
         }
 
         public void LogOut()
         {
-            if (IsCookieSet("userid") && IsCookieSet("role"))
+            if (IsCookieSet("userid") && IsCookieSet("role") && IsCookieSet("userName"))
             {
                 _httpContext.HttpContext.Response.Cookies.Delete("userid");
                 _httpContext.HttpContext.Response.Cookies.Delete("role");
-            }                          
+                _httpContext.HttpContext.Response.Cookies.Delete("userName");
+            }
         }
 
         public bool UserIsAuthenticated()
         {
-            return IsCookieSet("userid") && IsCookieSet("role");
+            return IsCookieSet("userid") && IsCookieSet("role") && IsCookieSet("userName");
         }
 
         #region private

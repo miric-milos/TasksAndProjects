@@ -22,6 +22,7 @@ namespace TasksAndProjectsApp.Models.ViewModels
         public Status Status { get; set; }
 
         [Required]
+        [Range(0, 100, ErrorMessage = "Progress cannot exceed 100%")]
         public int Progress { get; set; }
     }
 }

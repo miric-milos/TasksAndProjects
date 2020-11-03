@@ -14,5 +14,6 @@ namespace TasksAndProjectsApp.Infrastructure
         List<Project> GetProjects();
         Task UpdateProjectAsync(Project proj);
         Task AssignTaskToProjectAsync(int projId, AppTask task);
+        int GetProjectProgress(int projId);
     }
 }

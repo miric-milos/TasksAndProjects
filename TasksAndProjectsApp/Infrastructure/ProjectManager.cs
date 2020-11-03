@@ -46,7 +46,9 @@ namespace TasksAndProjectsApp.Infrastructure
 
         public List<Project> GetProjects()
         {
-            return _db.Projects.ToList();
+            return _db.Projects
+                .Include(p => p.Tasks)
+                .ToList();
         }
 
         public async Task UpdateProjectAsync(Project proj)
@@ -69,6 +71,21 @@ namespace TasksAndProjectsApp.Infrastructure
             {
                 throw new Exception("Unknown error occured");
             }
+        }
+
+        public int GetProjectProgress(int projId)
+        {
+            var project = _db.Projects
+                .Include(p => p.Tasks)
+                .FirstOrDefault(p => p.Id == projId);            
+
+            if(project != null && project.Tasks.Count != 0)
+            {
+                int sum = project.Tasks.Sum(t => t.Progress);
+                return sum / project.Tasks.Count;
+            }
+
+            return 0;
         }
     }
 }
