@@ -1,0 +1,36 @@
+﻿@model TasksAndProjectsApp.Models.ViewModels.EditTaskViewModel
+
+<div class="card shadow">
+    <form action="/dashboard/tasks/edit_assigned" method="post">
+        <div class="card-body">
+            @Html.AntiForgeryToken()
+            
+            <section class="text-danger font-weight-bolder">
+                @TempData[Model.Id + "_errorMessage"]
+            </section>
+
+            @Html.HiddenFor(m => m.Id)
+
+            <div class="form-group">
+                <label for="Description">Description</label>
+                @Html.TextBoxFor(m => m.Description, new { @class = "form-control " })
+            </div>
+            <div class="form-group">
+                <label for="Progress">Progress</label>
+                @Html.TextBoxFor(m => m.Progress, new { @class = "form-control mx-1", @type = "number" })
+            </div>
+            <div class="form-group">
+                <label for="Status">Status</label>
+                @Html.DropDownListFor(m => m.Status,
+                        new SelectList(Enum.GetValues(typeof(TasksAndProjectsApp.Models.Status))),
+                        new { @class = "form-control mx-1" })
+            </div>
+
+            <label for="Deadline">Deadline</label>
+            <p id="Deadline">@Model.Deadline.ToShortDateString()</p>
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-success" type="submit">Save changes</button>
+        </div>
+    </form>
+</div>

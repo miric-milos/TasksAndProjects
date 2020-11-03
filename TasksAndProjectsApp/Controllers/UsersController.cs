@@ -83,5 +83,54 @@ namespace TasksAndProjectsApp.Controllers
 
             return View("NotAuthorized");
         }
+
+        [HttpGet("{userId}")]
+        public IActionResult ViewEditUser(int userId)
+        {
+            var user = _userManager.GetUser(userId);
+
+            if(user != null)
+            {
+                TempData["userId"] = userId;
+                var model = new EditUserViewModel
+                {
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Role = user.Role,
+                    UserName = user.UserName
+                };
+
+                return View(model);
+            }
+
+            return View("Error");
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost("edit")]
+        public async Task<IActionResult> UpdateUser(EditUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = _userManager.GetUser((int)TempData["userId"]);
+
+                if(user != null)
+                {
+                    user.Email = model.Email;
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+                    user.UserName = model.UserName;
+                    user.Role = model.Role;
+
+                    await _userManager.UpdateUserAsync(user);
+                    return Redirect("/dashboard/users");
+                }
+
+                return View("Error");
+            }
+
+            return View("ViewEditUser");
+        }
     }
 }

@@ -41,7 +41,7 @@
                             <th>Progress</th>
                             <th>Status</th>
                             <th>Deadline</th>
-                            @if (Context.Request.Cookies["role"] == "Administrator")
+                            @if (Context.Request.Cookies["role"] != "Developer")
                             {
                                 <th>Manage</th>
                             }
@@ -74,15 +74,18 @@
                                     <td>@task.Progress%</td>
                                     <td>@task.Status</td>
                                     <td>@task.Deadline.ToShortDateString()</td>
-                                    @if (Context.Request.Cookies["role"] == "Administrator")
+                                    @if (Context.Request.Cookies["role"] != "Developer")
                                     {
                                         <td class="d-flex">
                                             <a href="/dashboard/tasks/@task.Id" class="btn btn-primary mx-2">View/Edit</a>
+                                            @if (Context.Request.Cookies["role"] == "Administrator")
+                                            {
+                                                <form action="/dashboard/tasks/delete/@task.Id" method="post">
+                                                    @Html.AntiForgeryToken()
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
 
-                                            <form action="/dashboard/tasks/delete/@task.Id" method="post">
-                                                @Html.AntiForgeryToken()
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </form>
+                                            }
                                         </td>
                                     }
                                 </tr>

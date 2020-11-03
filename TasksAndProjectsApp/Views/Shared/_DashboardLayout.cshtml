@@ -40,17 +40,17 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="/dashboard/projects">
-                    <span>Projects</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span>Tasks</span>
+                <a class="nav-link" href="/dashboard/tasks">
+                    <span>Your Tasks</span>
                 </a>
             </li>
             @if (Context.Request.Cookies["role"] != "Developer")
             {
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard/projects">
+                        <span>Projects</span>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/dashboard/users">
                         <span>Users</span>

@@ -13,5 +13,6 @@ namespace TasksAndProjectsApp.Infrastructure
         AppTask GetTask(int taskId);
         Task UpdateTaskAsync(AppTask task);
         Task UnassignFromTaskAsync(int userId);
+        IEnumerable<AppTask> GetTasksForAuthUser(int userId);
     }
 }

@@ -1,0 +1,59 @@
+﻿@model TasksAndProjectsApp.Models.ViewModels.EditUserViewModel
+@{
+    ViewData["Title"] = "ViewEditUser";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+
+<div class="container-fluid my-5">
+    <div class="row my-5">
+        <div class="col-md-5">
+            <div class="card shadow">
+                <div class="card-header bg-primary">
+                    <h4 class="text-white my-auto">Edit user details</h4>
+                </div>
+                <div class="card-body">
+
+                    <form action="/dashboard/users/edit" method="post">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                        <div class="form-group">
+                            <label for="Username">Username</label>
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="FirstName">First name</label>
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="LastName">Last name</label>
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Email">Email</label>
+                            @Html.TextBoxFor(m => m.Email, new { @type = "email", @class = "form-control" })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Role">Role</label>
+                            @Html.DropDownListFor(m => m.Role,
+                                new SelectList(Enum.GetValues(typeof(TasksAndProjectsApp.Models.Role))),
+                                new { @class = "form-control" })
+                        </div>
+
+                        <button type="submit" class="btn btn-outline-primary">Save changes</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+
+        </div>
+    </div>
+
+</div>

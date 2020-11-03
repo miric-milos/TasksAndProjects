@@ -44,6 +44,15 @@ namespace TasksAndProjectsApp.Infrastructure
                 .FirstOrDefault(t => t.Id == taskId);
         }
 
+        public IEnumerable<AppTask> GetTasksForAuthUser(int userId)
+        {
+            var tasks = _db.Tasks
+                .Include(t => t.Assignee)
+                .Where(t => t.Assignee.Id == userId || t.Assignee == null);
+
+            return tasks;
+        }
+
         public async Task UnassignFromTaskAsync(int userId)
         {
             var tasks = _db.Tasks

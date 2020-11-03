@@ -26,6 +26,19 @@ namespace TasksAndProjectsApp.Controllers
             _userManager = userManager;
         }
 
+        [HttpGet("")]
+        public IActionResult YourTasksView()
+        {
+            var user = _authManager.GetAuthenticatedUser();
+            if (user != null)
+            {
+                IEnumerable<AppTask> tasks = _taskManager.GetTasksForAuthUser(user.Id);
+                return View(tasks);
+            }
+
+            return View("Error");
+        }
+
         [ValidateAntiForgeryToken]
         [HttpPost("delete/{taskId}")]
         public async Task<IActionResult> DeleteTask(int taskId)
@@ -119,14 +132,41 @@ namespace TasksAndProjectsApp.Controllers
             return View("ViewEditTask");
         }
 
+        [ValidateAntiForgeryToken]
+        [HttpPost("edit_assigned")]
+        public async Task<IActionResult> UpdateAssignedTask(EditTaskViewModel model)
+        {
+            // get id of task
+            if (ModelState.IsValid)
+            {
+                var task = _taskManager.GetTask(model.Id);
+
+                if(task != null)
+                {
+                    task.Description = model.Description;
+                    task.Progress = model.Progress;
+                    task.Status = model.Status;
+
+                    await _taskManager.UpdateTaskAsync(task);
+                    return Redirect("/dashboard/tasks");
+                }
+                return View("Error");
+            }
+            TempData[model.Id + "_errorMessage"] = "Some fields were invalid, or empty, please try again";
+            return Redirect("/dashboard/tasks");
+        }
+
         [HttpGet("assign/{taskId}")]
         public IActionResult AssignTaskView(int taskId)
         {
-            if (_authManager.UserIsAuthenticated())
+            var user = _authManager.GetAuthenticatedUser();
+
+            if (user != null)
             {
                 TempData["taskId"] = taskId;
-
-                IEnumerable<AppUser> users = _userManager.GetUsers(Role.Developer);
+                // if user is admin, he can assign a task to anybody, PMs can only assign to developers
+                IEnumerable<AppUser> users =
+                    user.Role == Role.Administrator ? _userManager.GetUsers() : _userManager.GetUsers(Role.Developer);
 
                 return View(users);
             }

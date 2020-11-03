@@ -1,0 +1,26 @@
+﻿@model IEnumerable<TasksAndProjectsApp.Models.AppTask>
+@{
+    ViewData["Title"] = "YourTasksView";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+
+<div class="container-fluid my-5">
+    <h4 class="my-5">Tasks assigned to you</h4>
+    <div class="row my-5">
+        @foreach (var task in Model.Where(t => t.Assignee != null))
+        {
+            <div class="col-md-3 my-3">
+                @await Html.PartialAsync("/Views/Tasks/EditTaskPartial.cshtml",
+                    new TasksAndProjectsApp.Models.ViewModels.EditTaskViewModel
+                    {
+                        Id = task.Id,
+                        Deadline = task.Deadline,
+                        Description = task.Description,
+                        Progress = task.Progress,
+                        Status = task.Status
+                    })
+            </div>
+        }
+    </div>
+</div>
